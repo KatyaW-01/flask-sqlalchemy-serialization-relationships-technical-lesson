@@ -64,4 +64,6 @@ class Enclosure(db.Model):
 
 #Enclosure Schema
 class EnclosureSchema(Schema):
-    pass
+    id = fields.Int(dump_only=True)
+    environment = fields.String()
+    open_to_visitors = fields.Boolean()
