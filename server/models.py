@@ -36,13 +36,16 @@ class AnimalSchema(Schema):
     name = fields.String()
     species = fields.String()
 
+    zookeeper = fields.Nested(lambda: ZookeeperSchema(exclude=("animals",)))
+    enclosure = fields.Nested(lambda: EnclosureSchema(exclude=("animals",)))
+
 
 class Zookeeper(db.Model):
     __tablename__ = 'zookeepers'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, unique=True)
-    birthday = db.Column(db.Date)
+    #birthday = db.Column(db.Date)
 
     animals = db.relationship('Animal', back_populates='zookeeper')
 
@@ -50,7 +53,9 @@ class Zookeeper(db.Model):
 class ZookeeperSchema(Schema):
     id = fields.Int(dump_only=True)
     name=fields.String()
-    birthday=fields.DateTime
+    #birthday=fields.DateTime()
+
+    animals = fields.List(fields.Nested(AnimalSchema(exclude=("enclosure",))))
 
 
 class Enclosure(db.Model):
@@ -67,3 +72,5 @@ class EnclosureSchema(Schema):
     id = fields.Int(dump_only=True)
     environment = fields.String()
     open_to_visitors = fields.Boolean()
+
+    animals = fields.List(fields.Nested(AnimalSchema(exclude=("enclosure",))))
