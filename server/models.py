@@ -48,7 +48,9 @@ class Zookeeper(db.Model):
 
 #Zookeeper Schema
 class ZookeeperSchema(Schema):
-    pass
+    id = fields.Int(dump_only=True)
+    name=fields.String()
+    birthday=fields.DateTime
 
 
 class Enclosure(db.Model):
