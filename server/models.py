@@ -29,6 +29,12 @@ class Animal(db.Model):
 
     def __repr__(self):
         return f'<Animal {self.name}, a {self.species}>'
+    
+#Animal Schema
+class AnimalSchema(Schema):
+    id = fields.Int(dump_only=True)
+    name = fields.String()
+    species = fields.String()
 
 
 class Zookeeper(db.Model):
@@ -40,6 +46,10 @@ class Zookeeper(db.Model):
 
     animals = db.relationship('Animal', back_populates='zookeeper')
 
+#Zookeeper Schema
+class ZookeeperSchema(Schema):
+    pass
+
 
 class Enclosure(db.Model):
     __tablename__ = 'enclosures'
@@ -49,3 +59,7 @@ class Enclosure(db.Model):
     open_to_visitors = db.Column(db.Boolean)
 
     animals = db.relationship('Animal', back_populates='enclosure')
+
+#Enclosure Schema
+class EnclosureSchema(Schema):
+    pass
